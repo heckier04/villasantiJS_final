@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+</head>
+<body>
+    <header id="header">
+        <a href="index.html"><img src="" alt="">g</a>
+
+        <nav id="navbar-lincks">
+            <ul>
+                <li><a href="index.html">inicio</a></li>
+                <li><a href="tienda.html">tienda</a></li>
+                <li><a href="contacto.html">contacto</a></li>
+            </ul>
+        </nav>
+        <i id="cart-icon" class="fas fa-shopping-cart"></i>
+        <input type="text" id="search-input" placeholder="Buscar productos..." />
+    </header>
+
+    <main id="main">
+    
+        <div id="productos-container"></div>
+        <div class="cart-container" id="cart-container">
+            <div class="cart">
+                <h2>Carrito de Compras</h2>
+                <ul id="cart-items"></ul>
+                <p>Total: $<span id="total">0.00</span></p>
+                <button id="clear-cart">Vaciar Carrito</button>
+                <button id="buy-now">Comprar</button>
+            </div>
+            <!-- Contenedor de mensaje de compra -->
+            <div id="message-container" style="display: none; position: fixed; top: 20px; right: 20px; background-color: #fff; color: #000; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); z-index: 1000;">
+                <p id="message-text"></p>
+                <button id="message-close">Cerrar</button>
+  </div>
+  
+        </div>
+    </main>
+
+    <footer id="footer">
+        <p id="footer-text"></p>
+    </footer>
+    <script src="javascript/index.js"></script>
+    <script src="javascript/carrito.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="javascript/tienda.js"></script>
+</body>
+</html>
