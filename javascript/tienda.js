@@ -1,76 +1,102 @@
-// tienda.js
 
-// Selección de elementos del DOM
+
 const productosContainer = document.getElementById('productos-container');
 const searchInput = document.getElementById('search-input');
 const cartIcon = document.getElementById('cart-icon');
+
 let productos = [];
 
-// Función para cargar productos desde la API de Mercado Libre
-function cargarProductos() {
-  fetch('https://api.mercadolibre.com/sites/MLA/search?q=componentes Gamer')
-    .then(response => response.json())
-    .then(data => {
-      productos = data.results; // Guardamos los productos en una variable
-      mostrarProductos(productos); // Utilizamos la propiedad 'results' de la respuesta
-    })
-    .catch(error => console.error('Error al cargar productos:', error));
+//  cargar productos desde la API //
+async function cargarProductos() {
+  try {
+    const response = await fetch('https://api.mercadolibre.com/sites/MLA/search?q=componentes%20Gamer', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const data = await response.json();
+    productos = data.results;
+    mostrarProductos(productos);
+  } catch (error) {
+    console.error('Error al cargar productos:', error);
+    mostrarMensaje('Error', 'No se pudo cargar los productos', 'error');
+  }
 }
 
-// Función para mostrar los productos en la tienda
+//   productos de la tienda //
 function mostrarProductos(productosParaMostrar) {
-  productosContainer.innerHTML = ''; // Limpiamos el contenedor antes de mostrar los productos
-  
-  productosParaMostrar.forEach(producto => {
-    const productoDiv = document.createElement('div');
-    productoDiv.classList.add('producto');
-
-    // Algunos productos podrían no tener imagen, verificamos eso
-    const imagenProducto = producto.thumbnail ? producto.thumbnail : 'https://via.placeholder.com/150';
-
-    productoDiv.innerHTML = `
-      <img src="${imagenProducto}" alt="${producto.title}">
-      <h2>${producto.title}</h2>
-      <p>$${producto.price.toFixed(2)}</p>
-      <button class="add-to-cart" data-id="${producto.id}" data-name="${producto.title}" data-price="${producto.price}">
-        Agregar al carrito
-      </button>
-    `;
-
-    productosContainer.appendChild(productoDiv);
-  });
-
-  // Agregar eventos a los botones
-  document.querySelectorAll('.add-to-cart').forEach(button => {
-    button.addEventListener('click', agregarAlCarrito);
-  });
+    productosContainer.innerHTML = '';
+    if (productosParaMostrar.length === 0) {
+      productosContainer.innerHTML = '<p>No se encontraron productos</p>'; 
+      return;
+    }
+    productosParaMostrar.forEach((producto) => {
+      const productoDiv = document.createElement('div');
+      productoDiv.classList.add('producto');
+      const imagenProducto = producto.thumbnail ? producto.thumbnail : 'https://via.placeholder.com/250';
+      const price = producto.price ? producto.price.toFixed(2) : 'N/A';
+      productoDiv.innerHTML = `
+        <img src="${imagenProducto}" alt="${producto.title}">
+        <h2>${producto.title}</h2>
+        <p>$${price}</p>
+        <button class="add-to-cart" data-id="${producto.id}" data-name="${producto.title}" data-price="${producto.price}">
+          Agregar al carrito
+        </button>
+      `;
+      productosContainer.appendChild(productoDiv);
+    });
+    
+    document.querySelectorAll('.add-to-cart').forEach((button) => {
+      button.addEventListener('click', agregarAlCarrito);
+    });
 }
 
-// Función para filtrar productos según la búsqueda
+//  filtrar productos según la búsqueda //
 function filtrarProductos() {
-  const query = searchInput.value.toLowerCase();
-  const productosFiltrados = productos.filter(producto => 
-    producto.title.toLowerCase().includes(query)
-  );
+  const query = searchInput.value.toLowerCase().trim();
+  if (query === '') {
+    mostrarProductos(productos); 
+    return;
+  }
+  const productosFiltrados = productos.filter((producto) => producto.title.toLowerCase().includes(query));
   mostrarProductos(productosFiltrados);
 }
 
-// Función para agregar productos al carrito
+// agregar productos al carrito //
 function agregarAlCarrito(event) {
   const button = event.target;
   const nombre = button.getAttribute('data-name');
   const precio = parseFloat(button.getAttribute('data-price'));
-
-  // Enviar la información del producto al carrito
-  if (typeof agregarProductoAlCarrito === 'function') {
-    agregarProductoAlCarrito({ nombre, precio });
+  if (!isNaN(precio)) {
+    //  información del producto al carrito //
+    if (typeof agregarProductoAlCarrito === 'function') {
+      agregarProductoAlCarrito({ nombre, precio });
+    }
+  } else {
+    console.error('Precio inválido');
+    mostrarMensaje('Error', 'Precio inválido', 'error');
   }
 }
 
-// Evento para manejar la búsqueda
+//  mostrar mensajes //
+function mostrarMensaje(titulo, texto, tipo) {
+  if (typeof Swal !== 'undefined') {
+    Swal.fire({
+      title: titulo,
+      text: texto,
+      icon: tipo,
+      confirmButtonText: 'Aceptar'
+    });
+  } else {
+    console.error('Swal no está definido');
+  }
+}
+
+
 searchInput.addEventListener('input', filtrarProductos);
 
-// Cargar productos al cargar la página
+// Cargar productos al cargar la página //
 document.addEventListener('DOMContentLoaded', () => {
   cargarProductos();
 });

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Tecnova | inicio</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -11,7 +11,7 @@
 </head>
 <body>
     <header id="header">
-        <a href="index.html"><img src="" alt="">g</a>
+        <img src="imagen/logo2.png" alt="logo tienda">
 
         <nav id="navbar-lincks">
             <ul>
@@ -20,41 +20,47 @@
                 <li><a href="contacto.html">contacto</a></li>
             </ul>
         </nav>
-        <i id="cart-icon" class="fas fa-shopping-cart"></i>
+        
     </header>
-    <div class="cart">
-        <h2>Carrito de Compras</h2>
-        <ul id="cart-items"></ul>
-        <p>Total: $<span id="total">0.00</span></p>
-        <button id="clear-cart">Vaciar Carrito</button>
-        <button id="buy-now">Comprar</button>
-    </div>
+
     
 
     <!--carucel-->
         <div class="swiper">
-            <!-- Additional required wrapper -->
+            
             <div class="swiper-wrapper">
                 <!-- Slides -->
                 <div class="swiper-slide"><img src="imagen/compra.jpg" alt="imagen1"></div>
                 <div class="swiper-slide"><img src="imagen/razer.webp" alt="imagen2"></div>
                 <div class="swiper-slide"><img src="imagen/compra game.jpg" alt="imagen3"></div>
             </div>
-            <!-- If we need pagination -->
-            <div class="swiper-pagination"></div>
-    
-            <!-- If we need navigation buttons -->
+            
+            <div class="swiper-pagination"></div> 
+            
             <div class="swiper-button-prev"></div>
             <div class="swiper-button-next"></div>
-    
-            <!-- If we need scrollbar -->
+            
             <div class="swiper-scrollbar"></div>
         </div>
     
     <main id="main">
-        <div class="container">
-            <div class="almacen_1">a</div>
-            <div class="almacen_2">s</div>
+        <div class="tab-container">
+            <div class="tabs">
+                <button class="tab" data-target="almacen_1">Sobre nosotros</button>
+                <button class="tab" data-target="almacen_2">Articulos gamer</button>
+            </div>
+            
+            <div class="content">
+                <div id="almacen_1" class="tab-content active">
+                    <h2>TECNOVA</h2>
+                    <p>Tienda que todo gamer quiere estar. Componentes de ultima generacion</p>
+                    <p>Venimos a motrarte que dar un paso a una pc de la N.A.S.A la podes conseguir a la vuelta de tu casa</p>
+                </div>
+                <div id="almacen_2" class="tab-content">
+                    <h2>PROXIMAMENTE</h2>
+                    
+                </div>
+            </div>
         </div>
     </main>
     <footer id="footer">
@@ -62,10 +68,8 @@
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="javascript/index.js"></script>
-    <script src="javascript/navegador.js"></script>
-    <script src="javascript/formulario.js"></script>
+   
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="javascript/carrito.js"></script>
-    <script src="javascript/carrito.js"></script>
+
 </body>
 </html>
